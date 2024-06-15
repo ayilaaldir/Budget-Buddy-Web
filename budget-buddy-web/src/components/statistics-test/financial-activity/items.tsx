@@ -1,18 +1,13 @@
 import { Badge, Flex, Stack, Text } from "@chakra-ui/react";
 
-interface ExpenseProps {
-  amount: number;
-  note: string;
-  category: string;
+interface FinancialActivityItemProps {
+    amount: number;
+    note: string;
+    category: string;
+    type: string;
 }
 
-export default function ExpenseItems({ expense }: { expense: ExpenseProps }) {
-  const formatIDR = new Intl.NumberFormat(
-    'id-ID', {
-    style: 'currency',
-    currency: 'IDR'
-  }).format(expense.amount);
-
+const FinancialActivityItems: React.FC<FinancialActivityItemProps> = ({ amount, note, category, type }) => {
   return (
     <Flex
       bg={'white'}
@@ -23,7 +18,7 @@ export default function ExpenseItems({ expense }: { expense: ExpenseProps }) {
       border={'1px'}
       borderColor={'gray.200'}
       _hover={{
-        bg: 'blue.100',
+        bg: type === 'in' ? 'green.100' : 'red.100',
         transition: 'all 0.3s ease'
       }}
       alignItems="center"
@@ -31,25 +26,27 @@ export default function ExpenseItems({ expense }: { expense: ExpenseProps }) {
     >
       <Flex gap={2}>
         <Text fontSize={'lg'}>
-          -
+          {type === 'in' ? '+' : '-'}
         </Text>
         <Stack spacing={1}>
           <Text fontWeight={'bold'}>
-            {formatIDR}
+            {amount}
           </Text>
           <Text
             fontStyle={'italic'}
             color={'gray.500'}
           >
-            {expense.note || expense.category}
+            {note || category}
           </Text>
         </Stack>
       </Flex>
 
-      <Badge colorScheme="red" textTransform={"capitalize"} px={3} rounded={'md'}>
-        {expense.category}
+      <Badge colorScheme={type === 'in' ? 'green' : 'red'} textTransform={"capitalize"} px={3} rounded={'md'}>
+        {category}
       </Badge>
 
     </Flex>
   )
-}
+};
+
+export default FinancialActivityItems;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack, Text } from '@chakra-ui/react';
 
-interface IncomeGroupsProps {
+interface FinancialActivityGroupsProps {
     date: string;
     month: string;
     year: number;
@@ -9,7 +9,7 @@ interface IncomeGroupsProps {
     index: number;
 }
 
-const IncomeGroups: React.FC<IncomeGroupsProps> = ({ date, month, year, children, index }) => {
+const FinancialActivityGroups: React.FC<FinancialActivityGroupsProps> = ({ date, month, year, children, index }) => {
     return (
         <Stack key={`${date}-${month}-${year}-${index}`} spacing={4}>
             <Text ps={2}>{`${date} ${month} ${year}`}</Text>
@@ -18,5 +18,5 @@ const IncomeGroups: React.FC<IncomeGroupsProps> = ({ date, month, year, children
     );
 };
 
-export default IncomeGroups;
+export default FinancialActivityGroups;
 
