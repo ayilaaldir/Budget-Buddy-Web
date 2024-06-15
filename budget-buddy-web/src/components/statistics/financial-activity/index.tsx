@@ -40,18 +40,23 @@ const StatisticsComponent = () => {
             .catch(error => console.error('There was an error fetching the data:', error));
     }, []);
     const [totalIncome, setTotalIncome] = useState(0);
+    const [totalExpenses, setTotalExpenses] = useState(0);
 
     useEffect(() => {
         let newTotalIncome = 0;
+        let newTotalExpenses = 0;
         if (data) {
             data.days.forEach(day => {
                 day.datas.forEach(item => {
                     if (item.type === 'in') {
                         newTotalIncome += item.amount;
+                    }else{
+                        newTotalExpenses += item.amount;
                     }
                 });
             });
             setTotalIncome(newTotalIncome);
+            setTotalExpenses(newTotalExpenses);
         }
     }, [data]);
 
@@ -74,6 +79,8 @@ const StatisticsComponent = () => {
             <Stack spacing={1} py={5}>
                 <Text color={"gray.500"}>Total Income</Text>
                 <Heading fontSize={'2xl'} color={"green"}>Rp {totalIncome.toLocaleString()}</Heading>
+                <Text color={"gray.500"}>Total Expenses</Text>
+                <Heading fontSize={'2xl'} color={"red"}>Rp {totalExpenses.toLocaleString()}</Heading>
             </Stack>
         </Stack>
     );
