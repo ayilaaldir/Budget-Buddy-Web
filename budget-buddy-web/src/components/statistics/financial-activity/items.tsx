@@ -8,6 +8,12 @@ interface FinancialActivityItemProps {
 }
 
 const FinancialActivityItems: React.FC<FinancialActivityItemProps> = ({ amount, note, category, type }) => {
+  const formatIDR = new Intl.NumberFormat(
+    'id-ID', {
+    style: 'currency',
+    currency: 'IDR'
+  }).format(amount);
+
   return (
     <Flex
       bg={'white'}
@@ -30,7 +36,7 @@ const FinancialActivityItems: React.FC<FinancialActivityItemProps> = ({ amount, 
         </Text>
         <Stack spacing={1}>
           <Text fontWeight={'bold'}>
-            {amount}
+            {formatIDR}
           </Text>
           <Text
             fontStyle={'italic'}
