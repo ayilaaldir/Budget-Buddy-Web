@@ -5,7 +5,7 @@ import DashboardPage from "@/pages/dashboard";
 import StatisticsPage from "@/pages/statistics";
 import AccountPage from "@/pages/account";
 import TransactionsPage from "@/pages/transactions";
-import StatisticsPagetest from "./pages/statistics-test";
+import StatisticsPagetest from "./pages/statistics";
 
 export default function App() {
   return (

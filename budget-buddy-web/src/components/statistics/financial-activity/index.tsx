@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Heading,Stack, Text } from "@chakra-ui/react";
-import FinancialActivityItems from "@/components/statistics-test/financial-activity/items";
-import FinancialActivityGroups from '@/components/statistics-test/financial-activity/group';
-import FilterStatisticsDate from '@/components/statistics-test/FilterDate';
+import FinancialActivityItems from "@/components/statistics/financial-activity/items";
+import FinancialActivityGroups from '@/components/statistics/financial-activity/group';
+import FilterStatisticsDate from '@/components/statistics/FilterDate';
 
 interface GrandChildData {
     amount: number;
