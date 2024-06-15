@@ -1,7 +1,6 @@
-// StatisticsComponent.tsx
 import { useEffect, useState } from 'react';
 import { Heading,Stack, Text } from "@chakra-ui/react";
-import IncomeItems from "@/components/statistics-test/income/items";  // Adjust import path as necessary.
+import IncomeItems from "@/components/statistics-test/income/items";
 import IncomeGroups from '@/components/statistics-test/income/group';
 import FilterStatisticsDate from '@/components/statistics-test/FilterDate';
 
@@ -40,7 +39,7 @@ const StatisticsComponent = () => {
             .catch(error => console.error('There was an error fetching the data:', error));
     }, []);
     const [totalIncome, setTotalIncome] = useState(0);
-    
+
     useEffect(() => {
         let newTotalIncome = 0;
         if (data) {
