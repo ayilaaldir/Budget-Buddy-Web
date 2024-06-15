@@ -8,7 +8,7 @@ import FilterStatisticsDate from '@/components/statistics-test/FilterDate';
 interface IData {
     amount: number;
     note: string;
-    category: string;  // Category is not used in IncomeItems but kept here in case it's needed elsewhere.
+    category: string;  
 }
 
 interface IDay {
@@ -24,16 +24,23 @@ interface IStatisticsData {
 
 const StatisticsComponent = () => {
     const [data, setData] = useState<IStatisticsData | null>(null);
+    //const [year, setYear] = useState<number>(new Date().getFullYear());
+    //const [month, setMonth] = useState<number>(new Date().getMonth() + 1); 
+    //const [userId, setUserId] = useState<number>(1);
+
+    const year = 2024;
+    const month = 6;
+    const userId = 1;
 
     useEffect(() => {
-        fetch('http://141.147.151.192:8080/get_transaction.php?year=2024&month=6&user_id=1')
+        const url = `http://141.147.151.192:8080/get_transaction.php?year=${year}&month=${month}&user_id=${userId}`;
+        fetch(url)
             .then(response => response.json())
             .then((fetchedData: IStatisticsData) => setData(fetchedData))
             .catch(error => console.error('There was an error fetching the data:', error));
     }, []);
     const [totalIncome, setTotalIncome] = useState(0);
-
-    // Effect to calculate total income whenever data changes
+    
     useEffect(() => {
         let newTotalIncome = 0;
         if (data) {

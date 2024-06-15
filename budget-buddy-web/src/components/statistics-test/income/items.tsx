@@ -1,4 +1,3 @@
-// IncomeItems.tsx
 import { Badge, Flex, Stack, Text } from "@chakra-ui/react";
 
 interface IncomeItemProps {
