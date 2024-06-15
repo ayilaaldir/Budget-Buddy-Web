@@ -21,6 +21,25 @@ const dummyDatas = [
       }
     ]
   },
+
+  {
+    months: "May",
+    date: "07",
+    year: "2024",
+    datas: [
+      {
+        amount: 20000000,
+        note: "Gacha",
+        category: "Waste"
+      },
+      {
+        amount: 10000,
+        note: "Kang baso lewat",
+        category: "Mamam"
+      }
+    ]
+  },
+
   {
     months: "May",
     date: "12",
