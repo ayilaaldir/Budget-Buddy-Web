@@ -1,6 +1,6 @@
 // StatisticsComponent.tsx
 import { useEffect, useState } from 'react';
-import { Stack, Text } from "@chakra-ui/react";
+import { Heading,Stack, Text } from "@chakra-ui/react";
 import IncomeItems from "@/components/statistics-test/income/items";  // Adjust import path as necessary.
 import IncomeGroups from '@/components/statistics-test/income/group';
 import FilterStatisticsDate from '@/components/statistics-test/FilterDate';
@@ -31,6 +31,20 @@ const StatisticsComponent = () => {
             .then((fetchedData: IStatisticsData) => setData(fetchedData))
             .catch(error => console.error('There was an error fetching the data:', error));
     }, []);
+    const [totalIncome, setTotalIncome] = useState(0);
+
+    // Effect to calculate total income whenever data changes
+    useEffect(() => {
+        let newTotalIncome = 0;
+        if (data) {
+            data.days.forEach(day => {
+                day.datas.forEach(item => {
+                    newTotalIncome += item.amount;
+                });
+            });
+            setTotalIncome(newTotalIncome);
+        }
+    }, [data]);
 
     return (
         <Stack spacing={4}>
@@ -48,6 +62,10 @@ const StatisticsComponent = () => {
             ) : (
                 <Text>Loading data...</Text>
             )}
+            <Stack spacing={1} py={5}>
+                <Text color={"gray.500"}>Total Income</Text>
+                <Heading fontSize={'2xl'} color={"green"}>Rp {totalIncome.toLocaleString()}</Heading>
+            </Stack>
         </Stack>
     );
 };
