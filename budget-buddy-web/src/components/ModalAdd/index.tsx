@@ -1,7 +1,5 @@
 import { Heading, Modal, ModalBody, ModalContent, ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import ModalFormIncome from "./income";
-import ModalFormExpense from "./expense";
-import ModalFormTransfer from "./transfer";
+import ModalAddTransaction from "./add-transaction";
 
 export default function ModalAdd({
   isOpen, onClose
@@ -22,29 +20,15 @@ export default function ModalAdd({
         <ModalBody>
           <Tabs isFitted variant="enclosed">
             <TabList>
-              <Tab>Income</Tab>
-              <Tab>Expense</Tab>
-              <Tab>Transfer</Tab>
+              <Tab>Financial Activity</Tab>
             </TabList>
 
             <TabPanels>
               <TabPanel>
                 <Heading fontSize={'2xl'} pt={4} pb={8}>
-                  Add Income
+                  Add your money or waste
                 </Heading>
-                <ModalFormIncome onClose={onClose} />
-              </TabPanel>
-              <TabPanel>
-                <Heading fontSize={'2xl'} pt={4} pb={8}>
-                  Add Expense
-                </Heading>
-                <ModalFormExpense onClose={onClose} />
-              </TabPanel>
-              <TabPanel>
-                <Heading fontSize={'2xl'} pt={4} pb={8}>
-                  Add Transfer
-                </Heading>
-                <ModalFormTransfer onClose={onClose} />
+                <ModalAddTransaction onClose={onClose} />
               </TabPanel>
             </TabPanels>
           </Tabs>

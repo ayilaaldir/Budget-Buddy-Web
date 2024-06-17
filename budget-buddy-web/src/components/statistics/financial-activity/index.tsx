@@ -28,8 +28,8 @@ const StatisticsComponent = () => {
     //const [month, setMonth] = useState<number>(new Date().getMonth() + 1); 
     //const [userId, setUserId] = useState<number>(1);
 
-    const year = 2024;
-    const month = 6;
+    const year = 2022;
+    const month = 1;
     const userId = 1;
 
     useEffect(() => {

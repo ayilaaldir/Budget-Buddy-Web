@@ -1,17 +1,36 @@
-import { addTransferSchema } from "@/lib/yup/transfer";
-import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftElement, Stack } from "@chakra-ui/react";
+import { addIncomeSchema } from "@/lib/yup/income";
+import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftElement, Select, Stack } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 
-export default function ModalFormTransfer({ onClose }: { onClose: () => void }) {
+interface SelectProps {
+  value: string;
+  label: string;
+}
+
+const categories: SelectProps[] = [
+  { value: "allowance", label: "Allowance" },
+  { value: "salary", label: "Salary" },
+  { value: "petty_cash", label: "Petty Cash" },
+  { value: "bonus", label: "Bonus" },
+  { value: "other", label: "Other" },
+];
+
+const accounts: SelectProps[] = [
+  { value: "cash", label: "Cash" },
+  { value: "card", label: "Card" },
+  { value: "account", label: "Account" }
+];
+
+export default function ModalAddTransaction({ onClose }: { onClose: () => void }) {
   return (
     <Formik
-      validationSchema={addTransferSchema}
+      validationSchema={addIncomeSchema}
       initialValues={{
         date: undefined,
         amount: undefined,
-        from: undefined,
-        to: undefined,
-        note: undefined
+        account: "",
+        category: "",
+        note: undefined,
       }}
       onSubmit={(values) => {
         console.log(values);
@@ -42,23 +61,29 @@ export default function ModalFormTransfer({ onClose }: { onClose: () => void }) 
             </FormControl>
 
             <FormControl isRequired
-              isInvalid={!!errors.from && touched.from}
+              isInvalid={!!errors.category && touched.category}
             >
-              <FormLabel>
-                From
-              </FormLabel>
-              <Field as={Input} name="from" rounded={'lg'} />
-              <FormErrorMessage>{errors.from}</FormErrorMessage>
+              <FormLabel>Category</FormLabel>
+              <Field as={Select} name="category" rounded={"lg"}>
+                <option value="" disabled>Select Category</option>
+                {categories.map((item, index) => (
+                  <option key={index} value={item.value}>{item.label}</option>
+                ))}
+              </Field>
+              <FormErrorMessage>{errors.category}</FormErrorMessage>
             </FormControl>
 
             <FormControl isRequired
-              isInvalid={!!errors.to && touched.to}
+              isInvalid={!!errors.account && touched.account}
             >
-              <FormLabel>
-                To
-              </FormLabel>
-              <Field as={Input} name="to" rounded={'lg'} />
-              <FormErrorMessage>{errors.to}</FormErrorMessage>
+              <FormLabel>Account</FormLabel>
+              <Field as={Select} name="account" rounded={"lg"}>
+                <option value="" disabled>Select Account</option>
+                {accounts.map((item, index) => (
+                  <option key={index} value={item.value}>{item.label}</option>
+                ))}
+              </Field>
+              <FormErrorMessage>{errors.account}</FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={!!errors.note && touched.note}>
