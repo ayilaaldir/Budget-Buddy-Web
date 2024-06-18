@@ -1,5 +1,5 @@
 import { addIncomeSchema } from "@/lib/yup/income";
-import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftElement, Select, Stack} from "@chakra-ui/react";
+import { useToast, Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftElement, Select, Stack } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 
 interface SelectPropsNum {
@@ -21,11 +21,11 @@ const categories: SelectPropsNum[] = [
 ];
 
 const inout: SelectPropsStr[] = [
-  { value: "in", label: "Income"},
-  { value: "out", label: "Expenses"},
+  { value: "in", label: "Income" },
+  { value: "out", label: "Expenses" },
 ];
 
-const addTransaction = (values) => {
+const addTransaction = (values, toast) => {
   fetch('http://141.147.151.192:8080/add_transaction.php', {
     method: 'POST',
     headers: {
@@ -36,14 +36,23 @@ const addTransaction = (values) => {
   .then(response => response.json())
   .then(data => {
     if (data.status === 'success') {
-      console.log("KYAA")
+      toast({
+        title: "Successfully added",
+        description: "Your transaction has been successfully added.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      });
     } else {
-      console.log("FUK")
+      console.log("Error adding transaction");
     }
   })
 };
 
 export default function ModalAddTransaction({ onClose }: { onClose: () => void }) {
+  const toast = useToast();
+
   return (
     <Formik
       validationSchema={addIncomeSchema}
@@ -56,10 +65,8 @@ export default function ModalAddTransaction({ onClose }: { onClose: () => void }
         note: '',
       }}
       onSubmit={(values) => {
-        addTransaction(values);
-        console.log(values);
-      }}
-    >
+        addTransaction(values, toast);
+      }}    >
       {({ handleSubmit, errors, touched }) => (
         <form onSubmit={handleSubmit}>
           <Stack spacing={3}>
