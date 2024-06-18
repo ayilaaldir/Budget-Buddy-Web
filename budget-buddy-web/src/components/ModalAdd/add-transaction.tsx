@@ -1,50 +1,83 @@
 import { addIncomeSchema } from "@/lib/yup/income";
-import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftElement, Select, Stack } from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputLeftElement, Select, Stack} from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 
-interface SelectProps {
+interface SelectPropsNum {
+  value: number;
+  label: string;
+}
+
+interface SelectPropsStr {
   value: string;
   label: string;
 }
 
-const categories: SelectProps[] = [
-  { value: "allowance", label: "Allowance" },
-  { value: "salary", label: "Salary" },
-  { value: "petty_cash", label: "Petty Cash" },
-  { value: "bonus", label: "Bonus" },
-  { value: "other", label: "Other" },
+const categories: SelectPropsNum[] = [
+  { value: 1, label: "Groceries" },
+  { value: 2, label: "Entertainment" },
+  { value: 3, label: "Utilities" },
+  { value: 4, label: "Transportation" },
+  { value: 5, label: "Salary" },
 ];
 
-const accounts: SelectProps[] = [
-  { value: "cash", label: "Cash" },
-  { value: "card", label: "Card" },
-  { value: "account", label: "Account" }
+const inout: SelectPropsStr[] = [
+  { value: "in", label: "Income"},
+  { value: "out", label: "Expenses"},
 ];
+
+const addTransaction = (values) => {
+  fetch('http://141.147.151.192:8080/add_transaction.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: `category_id=${encodeURIComponent(values.category)}&user_id=${encodeURIComponent(values.user_id)}&amount=${encodeURIComponent(values.amount)}&transaction_date=${encodeURIComponent(values.date)}&description=${encodeURIComponent(values.note)}&in_out=${encodeURIComponent(values.inout)}`,
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      console.log("KYAA")
+    } else {
+      console.log("FUK")
+    }
+  })
+};
 
 export default function ModalAddTransaction({ onClose }: { onClose: () => void }) {
   return (
     <Formik
       validationSchema={addIncomeSchema}
       initialValues={{
-        date: undefined,
-        amount: undefined,
-        account: "",
-        category: "",
-        note: undefined,
+        user_id: '',
+        date: '',
+        amount: '',
+        category: '',
+        inout: '',
+        note: '',
       }}
       onSubmit={(values) => {
+        addTransaction(values);
         console.log(values);
       }}
     >
       {({ handleSubmit, errors, touched }) => (
         <form onSubmit={handleSubmit}>
-          <Stack spacing={4}>
+          <Stack spacing={3}>
+
+          <FormControl isRequired
+              isInvalid={!!errors.user_id && touched.user_id}
+            >
+              <FormLabel>User ID</FormLabel>
+              <InputGroup>
+                <Field as={Input} type="number" name="user_id" rounded={'lg'} ps={9} />
+              </InputGroup>
+              <FormErrorMessage>{errors.user_id}</FormErrorMessage>
+            </FormControl>
+
             <FormControl isRequired
               isInvalid={!!errors.date && touched.date}
             >
-              <FormLabel>
-                Date
-              </FormLabel>
+              <FormLabel>Date</FormLabel>
               <Field as={Input} type="date" name="date" rounded={'lg'} />
               <FormErrorMessage>{errors.date}</FormErrorMessage>
             </FormControl>
@@ -67,23 +100,23 @@ export default function ModalAddTransaction({ onClose }: { onClose: () => void }
               <Field as={Select} name="category" rounded={"lg"}>
                 <option value="" disabled>Select Category</option>
                 {categories.map((item, index) => (
-                  <option key={index} value={item.value}>{item.label}</option>
+                  <option key={index} value={Number(item.value)}>{item.label}</option>
                 ))}
               </Field>
               <FormErrorMessage>{errors.category}</FormErrorMessage>
             </FormControl>
 
             <FormControl isRequired
-              isInvalid={!!errors.account && touched.account}
+              isInvalid={!!errors.inout && touched.inout}
             >
-              <FormLabel>Account</FormLabel>
-              <Field as={Select} name="account" rounded={"lg"}>
-                <option value="" disabled>Select Account</option>
-                {accounts.map((item, index) => (
+              <FormLabel>Income or Expense</FormLabel>
+              <Field as={Select} name="inout" rounded={"lg"}>
+                <option value="" disabled>Select Income or Expenses</option>
+                {inout.map((item, index) => (
                   <option key={index} value={item.value}>{item.label}</option>
                 ))}
               </Field>
-              <FormErrorMessage>{errors.account}</FormErrorMessage>
+              <FormErrorMessage>{errors.inout}</FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={!!errors.note && touched.note}>
