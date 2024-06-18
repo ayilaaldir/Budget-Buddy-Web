@@ -7,7 +7,7 @@ export default function LoginHeader() {
         Sign in to your account
       </Heading>
       <Text fontSize={'lg'} fontWeight={'semibold'}>
-        Enter your email
+        Enter your username
       </Text>
     </Stack>
   )
