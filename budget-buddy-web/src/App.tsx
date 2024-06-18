@@ -15,7 +15,7 @@ export default function App() {
       <Route path="/statistics" element={<StatisticsPage />} />
       <Route path="/account" element={<AccountPage />} />
       <Route path="/statistics-test"  element={<StatisticsPagetest />} />
-      <Route path="/auth">
+            <Route path="/auth">
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
       </Route>

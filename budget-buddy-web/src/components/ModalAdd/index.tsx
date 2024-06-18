@@ -26,7 +26,7 @@ export default function ModalAdd({
             <TabPanels>
               <TabPanel>
                 <Heading fontSize={'2xl'} pt={4} pb={8}>
-                  Add your money or waste
+                  Add your income or expense
                 </Heading>
                 <ModalAddTransaction onClose={onClose} />
               </TabPanel>

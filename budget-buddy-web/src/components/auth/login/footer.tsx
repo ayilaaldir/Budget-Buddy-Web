@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate here
 
 const FooterDivider = () => (
   <Flex
@@ -12,12 +12,18 @@ const FooterDivider = () => (
     whiteSpace={'nowrap'}
   >
     <Box h={'1px'} bg={'gray.100'} w={'full'} />
-    <Text color={'gray.500'}>or continue with</Text>
+    <Text color={'gray.500'}>or</Text>
     <Box h={'1px'} bg={'gray.100'} w={'full'} />
   </Flex>
 )
 
 export default function LoginFooter() {
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  const handleUseWithoutAccount = () => {
+    navigate('/'); // Navigate back to the home page
+  };
+
   return (
     <>
       <FooterDivider />
@@ -26,21 +32,10 @@ export default function LoginFooter() {
           w={'full'}
           py={6}
           rounded={'lg'}
-          justifyContent={'space-between'}
           fontWeight={'bold'}
+          onClick={handleUseWithoutAccount} // Add onClick event here
         >
-          <Icon as={FcGoogle} boxSize={6} />
-          Google
-          <Icon as={FcGoogle} visibility={"hidden"} />
-        </Button>
-
-        <Button
-          w={'full'}
-          py={6}
-          rounded={'lg'}
-          fontWeight={'bold'}
-        >
-          I don't want to use account
+          Use without account
         </Button>
         <Text textAlign={'center'} color={'gray.500'}>
           Don't have an account? {' '}

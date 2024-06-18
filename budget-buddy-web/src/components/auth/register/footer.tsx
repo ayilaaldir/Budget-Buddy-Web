@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 
 const FooterDivider = () => (
   <Flex
@@ -11,12 +12,18 @@ const FooterDivider = () => (
     whiteSpace={'nowrap'}
   >
     <Box h={'1px'} bg={'gray.100'} w={'full'} />
-    <Text color={'gray.500'}>or continue with</Text>
+    <Text color={'gray.500'}>or</Text>
     <Box h={'1px'} bg={'gray.100'} w={'full'} />
   </Flex>
 )
 
 export default function RegisterFooter() {
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  const handleUseWithoutAccount = () => {
+    navigate('/'); // Navigate back to the home page
+  };
+
   return (
     <>
       <FooterDivider />
@@ -25,12 +32,10 @@ export default function RegisterFooter() {
           w={'full'}
           py={6}
           rounded={'lg'}
-          justifyContent={'space-between'}
           fontWeight={'bold'}
+          onClick={handleUseWithoutAccount} // Add onClick event here
         >
-          <Icon as={FcGoogle} boxSize={6} />
-          Google
-          <Icon as={FcGoogle} visibility={"hidden"} />
+          Use without account
         </Button>
 
         <Text textAlign={'center'} color={'gray.500'} px={5}>
