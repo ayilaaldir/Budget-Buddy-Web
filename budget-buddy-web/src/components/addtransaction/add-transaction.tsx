@@ -12,6 +12,8 @@ interface SelectPropsStr {
   label: string;
 }
 
+const user_id = localStorage.getItem('user_id');
+
 const categories: SelectPropsNum[] = [
   { value: 1, label: "Groceries" },
   { value: 2, label: "Entertainment" },
@@ -25,13 +27,13 @@ const inout: SelectPropsStr[] = [
   { value: "out", label: "Expenses" },
 ];
 
-const addTransaction = (values, toast, onClose) => {
+const addTransaction = (values, toast, onClose, user_id) => {
   fetch('http://141.147.151.192:8080/add_transaction.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: `category_id=${encodeURIComponent(values.category)}&user_id=${encodeURIComponent(values.user_id)}&amount=${encodeURIComponent(values.amount)}&transaction_date=${encodeURIComponent(values.date)}&description=${encodeURIComponent(values.note)}&in_out=${encodeURIComponent(values.inout)}`,
+    body: `category_id=${encodeURIComponent(values.category)}&user_id=${encodeURIComponent(user_id)}&amount=${encodeURIComponent(values.amount)}&transaction_date=${encodeURIComponent(values.date)}&description=${encodeURIComponent(values.note)}&in_out=${encodeURIComponent(values.inout)}`,
   })
   .then(response => response.json())
   .then(data => {
@@ -61,7 +63,6 @@ export default function ModalAddTransaction({ onClose }: { onClose: () => void }
     <Formik
       validationSchema={addIncomeSchema}
       initialValues={{
-        user_id: '',
         date: '',
         amount: '',
         category: '',
@@ -69,22 +70,12 @@ export default function ModalAddTransaction({ onClose }: { onClose: () => void }
         note: '',
       }}
       onSubmit={(values) => {
-        addTransaction(values, toast, onClose);
+        addTransaction(values, toast, onClose, user_id);
       }}
     >
       {({ handleSubmit, errors, touched }) => (
         <form onSubmit={handleSubmit}>
           <Stack spacing={3}>
-
-          <FormControl isRequired
-              isInvalid={!!errors.user_id && touched.user_id}
-            >
-              <FormLabel>User ID</FormLabel>
-              <InputGroup>
-                <Field as={Input} type="number" name="user_id" rounded={'lg'} ps={9} />
-              </InputGroup>
-              <FormErrorMessage>{errors.user_id}</FormErrorMessage>
-            </FormControl>
 
             <FormControl isRequired
               isInvalid={!!errors.date && touched.date}

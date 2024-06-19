@@ -1,4 +1,4 @@
-import { Flex, Input, Stack, Text, Select } from "@chakra-ui/react";
+import { Flex, Stack, Text, Select } from "@chakra-ui/react";
 import { useState } from "react";
 
 export default function FilterStatisticsDate() {
@@ -37,10 +37,6 @@ export default function FilterStatisticsDate() {
           </Select>
         </Stack>
       </Flex>
-      <Stack w={'full'} spacing={1}>
-        <Text>User ID</Text>
-        <Input type="text" placeholder="Enter user ID" />
-      </Stack>
     </Stack>
   );
 }

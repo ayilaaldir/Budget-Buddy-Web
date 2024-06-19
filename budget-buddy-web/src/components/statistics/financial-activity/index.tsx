@@ -22,18 +22,20 @@ interface MotherData {
     days: ChildData[];
 }
 
+
+
 const StatisticsComponent = () => {
     const [data, setData] = useState<MotherData | null>(null);
     //const [year, setYear] = useState<number>(new Date().getFullYear());
     //const [month, setMonth] = useState<number>(new Date().getMonth() + 1); 
     //const [userId, setUserId] = useState<number>(1);
 
-    const year = 2022;
-    const month = 1;
-    const userId = 1;
+    const year = 2024;
+    const month = 6;
+    const user_id = localStorage.getItem('user_id');
 
     useEffect(() => {
-        const url = `http://141.147.151.192:8080/get_transaction.php?year=${year}&month=${month}&user_id=${userId}`;
+        const url = `http://141.147.151.192:8080/get_transaction.php?year=${year}&month=${month}&user_id=${user_id}`;
         fetch(url)
             .then(response => response.json())
             .then((fetchedData: MotherData) => setData(fetchedData))
