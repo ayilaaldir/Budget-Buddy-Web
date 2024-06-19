@@ -7,7 +7,7 @@ export default function RegisterHeader() {
         Create an account
       </Heading>
       <Text fontSize={'lg'} fontWeight={'semibold'}>
-        Enter your email to sign up for this app
+        Enter your username to sign up for this app
       </Text>
     </Stack>
   )

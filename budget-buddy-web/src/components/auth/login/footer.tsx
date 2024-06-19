@@ -17,7 +17,7 @@ const FooterDivider = () => (
 )
 
 export default function LoginFooter() {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
 
   const handleUseWithoutAccount = () => {
     navigate('/');
@@ -32,7 +32,7 @@ export default function LoginFooter() {
           py={6}
           rounded={'lg'}
           fontWeight={'bold'}
-          onClick={handleUseWithoutAccount} // Add onClick event here
+          onClick={handleUseWithoutAccount}
         >
           Use without account
         </Button>

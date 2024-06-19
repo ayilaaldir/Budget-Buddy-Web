@@ -20,7 +20,6 @@ export default function ProfileMenu() {
   const handleLogout = () => {
     localStorage.removeItem('user_id');
     localStorage.removeItem('username');
-    localStorage.removeItem('email'); // Remove email if stored
     setIsLoggedIn(false);
     navigate('/auth/login');
   };
@@ -53,7 +52,7 @@ export default function ProfileMenu() {
         rounded={'lg'}
         colorScheme='blue'
       >
-        Hai {userData.username}
+        Hi {userData.username}
       </MenuButton>
       <MenuList p={0} rounded={'lg'}>
         <Box bg={'blue.200'} p={5} pb={8} roundedTop={'lg'} />

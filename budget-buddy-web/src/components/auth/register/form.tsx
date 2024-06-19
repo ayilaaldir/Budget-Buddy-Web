@@ -64,7 +64,6 @@ export default function RegisterForm() {
         confirmPassword: '' 
       }}
       onSubmit={(values) => {
-        console.log(values);
         handleSignUp(values);
       }}
     >

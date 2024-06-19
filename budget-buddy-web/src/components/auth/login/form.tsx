@@ -38,7 +38,6 @@ export default function LoginForm() {
         password: '' 
       }}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
         handleSignIn(values);
         setSubmitting(false);
       }}

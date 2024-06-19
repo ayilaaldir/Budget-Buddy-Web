@@ -44,7 +44,7 @@ const addTransaction = (values, toast, onClose) => {
         isClosable: true,
         position: "top"
       });
-      onClose(); // Close the modal on successful addition
+      onClose();
     } else {
       console.log("Error adding transaction");
     }
