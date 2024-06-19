@@ -1,22 +1,32 @@
-import { Avatar, Box, Button, Flex, Icon, Menu, MenuButton, MenuList, Stack, Text } from '@chakra-ui/react';
-import { AiFillSetting } from 'react-icons/ai';
-import { BsFillKeyFill } from 'react-icons/bs';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
+import { Avatar, Box, Button, Flex, Menu, MenuButton, MenuList, Stack, Text } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileMenu() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initialize as logged out
-  const navigate = useNavigate(); // Initialize the navigate function
-  const username = "John Doe";
-  const email = "johndoe@gmail.com";
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({ username: '' ,user_id: ''});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
+    const username = localStorage.getItem('username');
+
+    if (user_id && username) {
+      setUserData({ username, user_id});
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleLogout = () => {
-    setIsLoggedIn(false); // Update state on logout
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email'); // Remove email if stored
+    setIsLoggedIn(false);
+    navigate('/auth/login');
   };
 
   const handleLogin = () => {
-    setIsLoggedIn(true); // Update state on login
-    navigate('/auth/login'); // Navigate to the login page
+    navigate('/auth/login');
   };
 
   if (!isLoggedIn) {
@@ -27,7 +37,7 @@ export default function ProfileMenu() {
         cursor={'pointer'}
         rounded={'lg'}
         colorScheme='blue'
-        onClick={handleLogin} // Navigate to login page on click
+        onClick={handleLogin}
       >
         Sign In
       </Button>
@@ -43,15 +53,15 @@ export default function ProfileMenu() {
         rounded={'lg'}
         colorScheme='blue'
       >
-        Hai {username}
+        Hai {userData.username}
       </MenuButton>
       <MenuList p={0} rounded={'lg'}>
         <Box bg={'blue.200'} p={5} pb={8} roundedTop={'lg'} />
         <Flex align={'center'} direction={'column'} gap={3} px={2}>
-          <Avatar mt={-6} name={username} bg={'blue.500'} size={'lg'} border={'4px'} color={"white"} />
+          <Avatar mt={-6} name={userData.username} bg={'blue.500'} size={'lg'} border={'4px'} color={"white"} />
           <Stack spacing={1} w={'full'} textAlign={'center'}>
-            <Text fontWeight={'medium'}>{username}</Text>
-            <Text fontSize={'sm'} color={"gray.500"}>{email}</Text>
+            <Text fontWeight={'medium'}>{userData.username}</Text>
+            <Text fontSize={'sm'} color={"gray.500"}>User ID: {userData.user_id}</Text>
           </Stack>
           <Stack w={'full'} my={2} spacing={1}>
             <Button

@@ -15,9 +15,11 @@ export default function LoginForm() {
       body: `username=${encodeURIComponent(values.username)}&password=${encodeURIComponent(values.password)}`,
     })
       .then(response => response.json())
-      .then(data => {
-        if (data.status === 'success') {
+      .then(dataLogin => {
+        if (dataLogin.status === 'success') {
           console.log("Successfully Logged In");
+          localStorage.setItem('user_id', dataLogin.user_id);
+          localStorage.setItem('username', dataLogin.username);
           navigate('/');
         } else {
           console.log("Wrong username or password");

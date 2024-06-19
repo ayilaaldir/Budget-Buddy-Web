@@ -6,6 +6,32 @@ import { useNavigate } from "react-router-dom";
 export default function RegisterForm() {
   const navigate = useNavigate();
 
+  const handleSignIn = (values) => {
+    fetch('http://141.147.151.192:8080/login.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `username=${encodeURIComponent(values.username)}&password=${encodeURIComponent(values.password)}`,
+    })
+      .then(response => response.json())
+      .then(dataLogin => {
+        if (dataLogin.status === 'success') {
+          console.log("Successfully Logged In");
+          localStorage.setItem('user_id', dataLogin.user_id);
+          localStorage.setItem('username', dataLogin.username);
+          navigate('/');
+          window.location.reload();
+        } else {
+          console.log("Wrong username or password");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+    });
+  };
+
+
   const handleSignUp = (values) => {
     fetch('http://141.147.151.192:8080/register_user.php', {
       method: 'POST',
@@ -18,6 +44,7 @@ export default function RegisterForm() {
       .then(data => {
         if (data.status === 'success') {
           console.log("Successfully Sign Up");
+          handleSignIn(values);
           navigate('/');
         } else {
           console.log(data.message);
