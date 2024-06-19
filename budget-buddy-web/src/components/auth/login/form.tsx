@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "@/lib/yup/auth";
-import { Button, FormControl, FormErrorMessage, FormLabel, Input, Stack} from "@chakra-ui/react";
+import { Button, FormControl, FormErrorMessage, FormLabel, Input, Stack } from "@chakra-ui/react";
 import { Formik, Field } from "formik";
 
 export default function LoginForm() {
+  const navigate = useNavigate(); // Hook for navigation
   
   const handleSignIn = (values) => {
     fetch('http://141.147.151.192:8080/login.php', {
@@ -15,9 +17,10 @@ export default function LoginForm() {
       .then(response => response.json())
       .then(data => {
         if (data.status === 'success') {
-          console.log("Masuk")
+          console.log("Successfully Logged In");
+          navigate('/'); // Navigate to the dashboard page
         } else {
-          console.log("MANA ADA")
+          console.log("Wrong username or password");
         }
       })
       .catch(error => {
@@ -32,9 +35,10 @@ export default function LoginForm() {
         username: '', 
         password: '' 
       }}
-      onSubmit={(values) => {
+      onSubmit={(values, { setSubmitting }) => {
         console.log(values);
         handleSignIn(values);
+        setSubmitting(false);
       }}
     >
       {({ handleSubmit, errors, touched }) => (

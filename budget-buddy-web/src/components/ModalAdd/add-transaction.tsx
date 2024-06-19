@@ -25,7 +25,7 @@ const inout: SelectPropsStr[] = [
   { value: "out", label: "Expenses" },
 ];
 
-const addTransaction = (values, toast) => {
+const addTransaction = (values, toast, onClose) => {
   fetch('http://141.147.151.192:8080/add_transaction.php', {
     method: 'POST',
     headers: {
@@ -44,10 +44,14 @@ const addTransaction = (values, toast) => {
         isClosable: true,
         position: "top"
       });
+      onClose(); // Close the modal on successful addition
     } else {
       console.log("Error adding transaction");
     }
   })
+  .catch(error => {
+    console.error('Error:', error);
+  });
 };
 
 export default function ModalAddTransaction({ onClose }: { onClose: () => void }) {
@@ -65,8 +69,9 @@ export default function ModalAddTransaction({ onClose }: { onClose: () => void }
         note: '',
       }}
       onSubmit={(values) => {
-        addTransaction(values, toast);
-      }}    >
+        addTransaction(values, toast, onClose);
+      }}
+    >
       {({ handleSubmit, errors, touched }) => (
         <form onSubmit={handleSubmit}>
           <Stack spacing={3}>
