@@ -1,5 +1,4 @@
-import { Box, Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
-import { FcGoogle } from "react-icons/fc";
+import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate here
 
 const FooterDivider = () => (
@@ -21,7 +20,7 @@ export default function LoginFooter() {
   const navigate = useNavigate(); // Initialize the navigate function
 
   const handleUseWithoutAccount = () => {
-    navigate('/'); // Navigate back to the home page
+    navigate('/');
   };
 
   return (

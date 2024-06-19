@@ -4,7 +4,7 @@ import { Button, FormControl, FormErrorMessage, FormLabel, Input, Stack } from "
 import { Formik, Field } from "formik";
 
 export default function LoginForm() {
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
   
   const handleSignIn = (values) => {
     fetch('http://141.147.151.192:8080/login.php', {
@@ -18,7 +18,7 @@ export default function LoginForm() {
       .then(data => {
         if (data.status === 'success') {
           console.log("Successfully Logged In");
-          navigate('/'); // Navigate to the dashboard page
+          navigate('/');
         } else {
           console.log("Wrong username or password");
         }

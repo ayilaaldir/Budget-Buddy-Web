@@ -1,5 +1,4 @@
-import { Box, Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
-import { FcGoogle } from "react-icons/fc";
+import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
 import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 
 const FooterDivider = () => (
