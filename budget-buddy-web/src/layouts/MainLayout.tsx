@@ -1,4 +1,4 @@
-import ModalAdd from "@/components/ModalAdd";
+import ModalAdd from "@/components/addtransaction";
 import Navbar from "@/components/navbar"
 import Sidebar from "@/components/sidebar"
 import { Box, Button, Flex, Icon, useDisclosure } from "@chakra-ui/react"
