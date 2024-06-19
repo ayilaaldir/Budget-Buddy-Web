@@ -47,6 +47,7 @@ const addTransaction = (values, toast, onClose, user_id) => {
         position: "top"
       });
       onClose();
+      window.location.reload();
     } else {
       console.log("Error adding transaction");
     }
