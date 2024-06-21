@@ -1,6 +1,5 @@
 import TransactionsCalendar from "@/components/transactions/calendar";
 import TransactionsMonthly from "@/components/transactions/monthly";
-import TransactionNotes from "@/components/transactions/notes";
 import MainLayout from "@/layouts/MainLayout";
 import { Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 
@@ -13,7 +12,6 @@ export default function TransactionsPage() {
             <TabList>
               <Tab>Calendar</Tab>
               <Tab>Monthly</Tab>
-              <Tab>Note</Tab>
             </TabList>
             <TabPanels>
               <TabPanel py={8}>
@@ -21,9 +19,6 @@ export default function TransactionsPage() {
               </TabPanel>
               <TabPanel py={8}>
                 <TransactionsMonthly />
-              </TabPanel>
-              <TabPanel py={8}>
-                <TransactionNotes />
               </TabPanel>
             </TabPanels>
           </Tabs>
