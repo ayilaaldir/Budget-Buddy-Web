@@ -22,8 +22,6 @@ interface MotherData {
     days: ChildData[];
 }
 
-
-
 const StatisticsComponent = () => {
     const [data, setData] = useState<MotherData | null>(null);
     //const [year, setYear] = useState<number>(new Date().getFullYear());
@@ -40,7 +38,7 @@ const StatisticsComponent = () => {
             .then(response => response.json())
             .then((fetchedData: MotherData) => setData(fetchedData))
             .catch(error => console.error('There was an error fetching the data:', error));
-    }, []);
+    });
     const [totalIncome, setTotalIncome] = useState(0);
     const [totalExpenses, setTotalExpenses] = useState(0);
 
@@ -66,15 +64,19 @@ const StatisticsComponent = () => {
         <Stack spacing={4}>
             <FilterStatisticsDate/>
             {data ? (
-                <>
-                    {data.days.map((day, index) => (
-                        <FinancialActivityGroups date={day.date} month={data.months} year={data.year} index={index} key={index}>
-                            {day.datas.map((item, itemIndex) => (
-                                <FinancialActivityItems key={itemIndex} amount={item.amount} note={item.note} category={item.category} type={item.type} />
-                            ))}
-                        </FinancialActivityGroups>
-                    ))}
-                </>
+                data.days.length > 0 ? (
+                    <>
+                        {data.days.map((day, index) => (
+                            <FinancialActivityGroups date={day.date} month={data.months} year={data.year} index={index} key={index}>
+                                {day.datas.map((item, itemIndex) => (
+                                    <FinancialActivityItems key={itemIndex} amount={item.amount} note={item.note} category={item.category} type={item.type} />
+                                ))}
+                            </FinancialActivityGroups>
+                        ))}
+                    </>
+                ) : (
+                    <Text>No data available.</Text>  // This is the new line added for when there are no entries in data.days
+                )
             ) : (
                 <Text>Loading data...</Text>
             )}
