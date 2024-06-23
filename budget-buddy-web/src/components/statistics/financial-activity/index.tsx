@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Heading,Stack, Text } from "@chakra-ui/react";
+import { Heading,Stack, Text,FormControl,FormLabel,Input } from "@chakra-ui/react";
 import FinancialActivityItems from "@/components/statistics/financial-activity/items";
 import FinancialActivityGroups from '@/components/statistics/financial-activity/group';
 import FilterStatisticsDate from '@/components/statistics/FilterDate';
@@ -24,21 +24,19 @@ interface MotherData {
 
 const StatisticsComponent = () => {
     const [data, setData] = useState<MotherData | null>(null);
-    //const [year, setYear] = useState<number>(new Date().getFullYear());
-    //const [month, setMonth] = useState<number>(new Date().getMonth() + 1); 
-    //const [userId, setUserId] = useState<number>(1);
+    const [selectedYearTo, setSelectedYearTo] = useState<number>(new Date().getFullYear());
+    const [selectedMonthTo, setSelectedMonthTo] = useState<number>(new Date().getMonth()); 
 
-    const year = 2024;
-    const month = 6;
     const user_id = localStorage.getItem('user_id');
 
-    useEffect(() => {
-        const url = `http://141.147.151.192:8080/get_transaction.php?year=${year}&month=${month}&user_id=${user_id}`;
+    const fetchData = () => {
+        const url = `http://141.147.151.192:8080/get_transaction.php?year=${selectedYearTo}&month=${selectedMonthTo + 1}&user_id=${user_id}`;
         fetch(url)
             .then(response => response.json())
             .then((fetchedData: MotherData) => setData(fetchedData))
             .catch(error => console.error('There was an error fetching the data:', error));
-    });
+    };
+
     const [totalIncome, setTotalIncome] = useState(0);
     const [totalExpenses, setTotalExpenses] = useState(0);
 
@@ -62,7 +60,13 @@ const StatisticsComponent = () => {
 
     return (
         <Stack spacing={4}>
-            <FilterStatisticsDate/>
+            <FilterStatisticsDate
+              selectedYearTo={selectedYearTo}
+              setSelectedYearTo={setSelectedYearTo}
+              selectedMonthTo={selectedMonthTo}
+              setSelectedMonthTo={setSelectedMonthTo}
+              onApply={fetchData}
+            />
             {data ? (
                 data.days.length > 0 ? (
                     <>

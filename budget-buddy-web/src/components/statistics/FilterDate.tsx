@@ -1,16 +1,13 @@
-import { Flex, Stack, Text, Select } from "@chakra-ui/react";
+import { Flex, Stack, Text, Select,Button } from "@chakra-ui/react";
 import { useState } from "react";
 
-export default function FilterStatisticsDate() {
+export default function FilterStatisticsDate({ selectedYearTo, setSelectedYearTo, selectedMonthTo, setSelectedMonthTo, onApply }) {
   const currentYear = new Date().getFullYear();
   const years = Array.from(new Array(20), (val, index) => currentYear - index);
   const months = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
-
-  const [selectedYearTo, setSelectedYearTo] = useState(currentYear);
-  const [selectedMonthTo, setSelectedMonthTo] = useState(0);
 
   return (
     <Stack spacing={3} rounded={"lg"} py={6} bg={"white"} px={5}>
@@ -35,6 +32,7 @@ export default function FilterStatisticsDate() {
               <option key={index} value={index}>{month}</option>
             ))}
           </Select>
+            <Button colorScheme="blue" onClick={onApply}>Apply</Button>
         </Stack>
       </Flex>
     </Stack>
