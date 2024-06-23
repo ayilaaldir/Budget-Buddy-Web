@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { useToast } from '@chakra-ui/react';
 
 interface DataItem {
   amount: number;
@@ -44,23 +43,16 @@ const debounce = <F extends (...args: any[]) => any>(func: F, wait: number): ((.
 export default function TransactionsCalendar() {
   const [events, setEvents] = useState<Event[]>([]);
   const user_id = localStorage.getItem('user_id');
-  const toast = useToast();
 
-  const fetchEvents = useCallback(debounce((year: number, month: number,toast) => {
+  const handleDatesSet = ({ end }) => {
+    fetchEvents(end.getFullYear(), end.getMonth());
+  };
 
-    console.log("BULAN", month)
+  const fetchEvents = useCallback(debounce((year: number, month: number) => {
 
-
-    //why i need to write this
-    if (month > 11 || month < 0) {
-      toast({
-        title: "BROKEN",
-        description: "TRANSISI DARI DESEMBER KE JANUARI MASIH BROKEN IDFK",
-        duration: 5000,
-        isClosable: true,
-        position: "top"
-      });
-      return;
+    if (month == 0) {
+      month = 12
+      year -= 1
     }
 
     const url = `http://141.147.151.192:8080/get_transaction.php?year=${year}&month=${month}&user_id=${user_id}`;
@@ -91,7 +83,7 @@ export default function TransactionsCalendar() {
         initialView="dayGridMonth"
         events={events}
         weekends={true}
-        datesSet={({ start }) => fetchEvents(start.getFullYear(), start.getMonth() + 2,toast)}
+        datesSet={handleDatesSet}
       />
   );
 }
